@@ -40,16 +40,9 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-// Serve Frontend
-const frontendDistPath = path.join(__dirname, '../../frontend/dist');
-app.use(express.static(frontendDistPath));
-
-app.use((req, res, next) => {
-    if (req.method === 'GET' && !req.path.startsWith('/api')) {
-        res.sendFile(path.join(frontendDistPath, 'index.html'));
-    } else {
-        next();
-    }
+// Serve Frontend - REMOVED for separate deployment
+app.get('/', (req, res) => {
+    res.json({ message: "VOTEX API is running successfully!" });
 });
 
 // Import Routes
